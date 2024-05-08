@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "cams",
+  "info": {
+    "singularName": "cam",
+    "pluralName": "cams",
+    "displayName": "Cam"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "token": {
+      "type": "string"
+    }
+  }
+}

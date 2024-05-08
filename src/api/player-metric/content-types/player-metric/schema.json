@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "player_metrics",
+  "info": {
+    "singularName": "player-metric",
+    "pluralName": "player-metrics",
+    "displayName": "PlayerMetric"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "good_serves_percentage": {
+      "type": "decimal"
+    },
+    "ace_percentage": {
+      "type": "decimal"
+    },
+    "second_good_serves_percentage": {
+      "type": "decimal"
+    },
+    "net_points_percentage": {
+      "type": "decimal"
+    },
+    "average_reaction_tyme": {
+      "type": "decimal"
+    },
+    "save_return_efficiency_percentage": {
+      "type": "decimal"
+    }
+  }
+}

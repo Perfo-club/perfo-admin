@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "enclosures",
+  "info": {
+    "singularName": "enclosure",
+    "pluralName": "enclosures",
+    "displayName": "Enclosure",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "cams": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::cam.cam"
+    },
+    "matches": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::match.match"
+    },
+    "description": {
+      "type": "blocks"
+    }
+  }
+}

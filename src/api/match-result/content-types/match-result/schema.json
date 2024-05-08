@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "match_results",
+  "info": {
+    "singularName": "match-result",
+    "pluralName": "match-results",
+    "displayName": "MatchResult"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "team_a_points": {
+      "type": "integer"
+    },
+    "team_b_points": {
+      "type": "integer"
+    }
+  }
+}
