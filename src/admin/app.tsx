@@ -1,12 +1,27 @@
+import logo from "./extensions/faviconPerfoLogo.png";
 export default {
   config: {
+    notifications: {
+      releases: false
+    },
+    tutorials: false,
+    head: {
+      favicon: logo,
+    },
+    auth:{
+      logo
+    },
+    menu: {
+      logo
+    },
+
     locales: [
       // 'ar',
       // 'fr',
       // 'cs',
       // 'de',
       // 'dk',
-      // 'es',
+      'es',
       // 'he',
       // 'id',
       // 'it',
@@ -28,6 +43,14 @@ export default {
       // 'zh-Hans',
       // 'zh',
     ],
+    translations: {
+      'es': {
+        Users: 'Usuarios',
+        Cam: 'Dispositivos',
+        Enclosure: 'Establecimientos',
+
+      }
+    }
   },
   bootstrap(app) {
     console.log(app);

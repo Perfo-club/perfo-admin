@@ -15,7 +15,7 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v3
       with: 
-        node-version: 'latest'
+        node-version: '18.17.1'
     - name: Install dependencies
       run: npm install
     - name: Install ssh keys
@@ -28,7 +28,7 @@ jobs:
     - name: Set up environment
       run: echo "export PATH=$PATH" >> $GITHUB_ENV
     - name: "Build"
-      run: npm run build
+      run: NODE_ENV=production npm run build
     - name: "Copy build"
       run: scp -r dist ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:${{secrets.WORK_DIR}}
     - name: Connect and restart service
