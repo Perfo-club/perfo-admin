@@ -1,4 +1,5 @@
 import logo from "./extensions/faviconPerfoLogo.png";
+
 export default {
   config: {
     notifications: {
@@ -13,6 +14,14 @@ export default {
     },
     menu: {
       logo
+    },
+    translations: {
+      //https://github.com/strapi/strapi/blob/main/packages/core/admin/admin/src/translations/es.json
+      es: {
+        "app.components.LeftMenu.navbrand.title": "Panel de control Perfo",
+        "Auth.form.welcome.subtitle": "Inicie sesión en su cuenta de Perfo",
+        "app.components.HomePage.welcomeBlock.content.again": "Bienvenido al admin de Perfo.club",
+      },
     },
 
     locales: [
@@ -43,14 +52,6 @@ export default {
       // 'zh-Hans',
       // 'zh',
     ],
-    translations: {
-      'es': {
-        Users: 'Usuarios',
-        Cam: 'Dispositivos',
-        Enclosure: 'Establecimientos',
-
-      }
-    }
   },
   bootstrap(app) {
     console.log(app);
