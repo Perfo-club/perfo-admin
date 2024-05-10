@@ -1,0 +1,29 @@
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  
+jobs:
+  update-repository-pull:
+    name: Pull main
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Install ssh keys
+      # check this thread to understand why its needed:
+      # https://stackoverflow.com/a/70447517
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
+    - name: Set up environment
+      run: echo "export PATH=$PATH" >> $GITHUB_ENV
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with: 
+        node-version: 'latest'
+    - name: connect and pull
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "export NVM_DIR=~/.nvm && source ~/.nvm/nvm.sh && cd ${{ secrets.WORK_DIR }} && git checkout main && git pull origin && npm install && npm run build && pm2 restart perfo-cms && exit"
+    - name: cleanup
+      run: rm -rf ~/.ssh
