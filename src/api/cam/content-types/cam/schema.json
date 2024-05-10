@@ -4,7 +4,8 @@
   "info": {
     "singularName": "cam",
     "pluralName": "cams",
-    "displayName": "Cam"
+    "displayName": "Dispositivos",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -12,10 +13,12 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {}
     },
     "token": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {}
     }
   }
 }

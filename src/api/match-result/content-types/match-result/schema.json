@@ -4,7 +4,7 @@
   "info": {
     "singularName": "match-result",
     "pluralName": "match-results",
-    "displayName": "MatchResult"
+    "displayName": "Resultado de Partido"
   },
   "options": {
     "draftAndPublish": true

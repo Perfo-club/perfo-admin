@@ -4,7 +4,7 @@
   "info": {
     "singularName": "team",
     "pluralName": "teams",
-    "displayName": "Team"
+    "displayName": "Equipo"
   },
   "options": {
     "draftAndPublish": true

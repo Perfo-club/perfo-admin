@@ -793,7 +793,8 @@ export interface ApiCamCam extends Schema.CollectionType {
   info: {
     singularName: 'cam';
     pluralName: 'cams';
-    displayName: 'Cam';
+    displayName: 'Dispositivos';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -816,7 +817,7 @@ export interface ApiEnclosureEnclosure extends Schema.CollectionType {
   info: {
     singularName: 'enclosure';
     pluralName: 'enclosures';
-    displayName: 'Enclosure';
+    displayName: 'Establecimientos';
     description: '';
   };
   options: {
@@ -860,7 +861,7 @@ export interface ApiMatchMatch extends Schema.CollectionType {
   info: {
     singularName: 'match';
     pluralName: 'matches';
-    displayName: 'Match';
+    displayName: 'Partidos';
   };
   options: {
     draftAndPublish: true;
@@ -906,7 +907,7 @@ export interface ApiMatchResultMatchResult extends Schema.CollectionType {
   info: {
     singularName: 'match-result';
     pluralName: 'match-results';
-    displayName: 'MatchResult';
+    displayName: 'Resultado de Partido';
   };
   options: {
     draftAndPublish: true;
@@ -937,7 +938,7 @@ export interface ApiPlayerMetricPlayerMetric extends Schema.CollectionType {
   info: {
     singularName: 'player-metric';
     pluralName: 'player-metrics';
-    displayName: 'PlayerMetric';
+    displayName: 'Metrica de Jugador';
   };
   options: {
     draftAndPublish: true;
@@ -972,7 +973,7 @@ export interface ApiTeamTeam extends Schema.CollectionType {
   info: {
     singularName: 'team';
     pluralName: 'teams';
-    displayName: 'Team';
+    displayName: 'Equipo';
   };
   options: {
     draftAndPublish: true;

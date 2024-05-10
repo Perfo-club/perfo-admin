@@ -4,7 +4,7 @@
   "info": {
     "singularName": "player-metric",
     "pluralName": "player-metrics",
-    "displayName": "PlayerMetric"
+    "displayName": "Metrica de Jugador"
   },
   "options": {
     "draftAndPublish": true

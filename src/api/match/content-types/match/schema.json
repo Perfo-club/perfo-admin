@@ -4,7 +4,7 @@
   "info": {
     "singularName": "match",
     "pluralName": "matches",
-    "displayName": "Match"
+    "displayName": "Partidos"
   },
   "options": {
     "draftAndPublish": true
