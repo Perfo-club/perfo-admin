@@ -32,6 +32,6 @@ jobs:
     - name: "Copy build"
       run: scp -r dist ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:${{secrets.WORK_DIR}}
     - name: Connect, install and restart service
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "export NVM_DIR=~/.nvm && source ~/.nvm/nvm.sh && cd ${{ secrets.WORK_DIR }} && ggpull && npm install && pm2 restart perfo-cms && exit"
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "export NVM_DIR=~/.nvm && source ~/.nvm/nvm.sh && cd ${{ secrets.WORK_DIR }} && git pull origin && npm install && pm2 restart perfo-cms && exit"
     - name: cleanup
       run: rm -rf ~/.ssh
