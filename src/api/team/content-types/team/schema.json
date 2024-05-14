@@ -4,7 +4,8 @@
   "info": {
     "singularName": "team",
     "pluralName": "teams",
-    "displayName": "Equipo"
+    "displayName": "Equipo",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,14 +16,26 @@
       "type": "string"
     },
     "avatar": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "equipos"
+    },
+    "metrics": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team-metric.team-metric"
     }
   }
 }

@@ -590,6 +590,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -695,7 +742,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -724,6 +770,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    player_metrics: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::player-metric.player-metric'
+    >;
+    equipos: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
+      'api::team.team'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -734,53 +790,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::users-permissions.user',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
       'oneToOne',
       'admin::user'
     > &
@@ -801,7 +810,12 @@ export interface ApiCamCam extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String;
-    token: Attribute.String;
+    token: Attribute.UID;
+    enclosure: Attribute.Relation<
+      'api::cam.cam',
+      'oneToOne',
+      'api::enclosure.enclosure'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -862,6 +876,7 @@ export interface ApiMatchMatch extends Schema.CollectionType {
     singularName: 'match';
     pluralName: 'matches';
     displayName: 'Partidos';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -869,11 +884,6 @@ export interface ApiMatchMatch extends Schema.CollectionType {
   attributes: {
     date: Attribute.DateTime;
     duration: Attribute.Decimal;
-    player_metrics: Attribute.Relation<
-      'api::match.match',
-      'oneToMany',
-      'api::player-metric.player-metric'
-    >;
     match_result: Attribute.Relation<
       'api::match.match',
       'oneToOne',
@@ -939,6 +949,7 @@ export interface ApiPlayerMetricPlayerMetric extends Schema.CollectionType {
     singularName: 'player-metric';
     pluralName: 'player-metrics';
     displayName: 'Metrica de Jugador';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -948,8 +959,13 @@ export interface ApiPlayerMetricPlayerMetric extends Schema.CollectionType {
     ace_percentage: Attribute.Decimal;
     second_good_serves_percentage: Attribute.Decimal;
     net_points_percentage: Attribute.Decimal;
-    average_reaction_tyme: Attribute.Decimal;
+    average_reaction_time: Attribute.Decimal;
     save_return_efficiency_percentage: Attribute.Decimal;
+    user: Attribute.Relation<
+      'api::player-metric.player-metric',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -974,6 +990,7 @@ export interface ApiTeamTeam extends Schema.CollectionType {
     singularName: 'team';
     pluralName: 'teams';
     displayName: 'Equipo';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -981,12 +998,53 @@ export interface ApiTeamTeam extends Schema.CollectionType {
   attributes: {
     name: Attribute.String;
     avatar: Attribute.Media;
+    users: Attribute.Relation<
+      'api::team.team',
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+    metrics: Attribute.Relation<
+      'api::team.team',
+      'oneToMany',
+      'api::team-metric.team-metric'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::team.team', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::team.team', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTeamMetricTeamMetric extends Schema.CollectionType {
+  collectionName: 'team_metrics';
+  info: {
+    singularName: 'team-metric';
+    pluralName: 'team-metrics';
+    displayName: 'Metrica de equipo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    attack_time: Attribute.Decimal;
+    defense_time: Attribute.Decimal;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::team-metric.team-metric',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::team-metric.team-metric',
+      'oneToOne',
+      'admin::user'
+    > &
       Attribute.Private;
   };
 }
@@ -1005,16 +1063,17 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
       'api::cam.cam': ApiCamCam;
       'api::enclosure.enclosure': ApiEnclosureEnclosure;
       'api::match.match': ApiMatchMatch;
       'api::match-result.match-result': ApiMatchResultMatchResult;
       'api::player-metric.player-metric': ApiPlayerMetricPlayerMetric;
       'api::team.team': ApiTeamTeam;
+      'api::team-metric.team-metric': ApiTeamMetricTeamMetric;
     }
   }
 }

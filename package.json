@@ -5,17 +5,18 @@
   "description": "A Strapi application",
   "scripts": {
     "develop": "strapi develop",
-    "watch":"strapi develop --watch-admin",
+    "watch": "strapi develop --watch-admin",
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
   "dependencies": {
-    "@strapi/strapi": "4.24.2",
-    "@strapi/plugin-users-permissions": "4.24.2",
-    "@strapi/plugin-i18n": "4.24.2",
     "@strapi/plugin-cloud": "4.24.2",
+    "@strapi/plugin-i18n": "4.24.2",
+    "@strapi/plugin-users-permissions": "4.24.2",
+    "@strapi/strapi": "4.24.2",
+    "@types/koa": "^2.15.0",
+    "dayjs": "^1.11.11",
     "pg": "8.8.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

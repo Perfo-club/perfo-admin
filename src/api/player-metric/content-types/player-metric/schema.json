@@ -4,7 +4,8 @@
   "info": {
     "singularName": "player-metric",
     "pluralName": "player-metrics",
-    "displayName": "Metrica de Jugador"
+    "displayName": "Metrica de Jugador",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -23,11 +24,16 @@
     "net_points_percentage": {
       "type": "decimal"
     },
-    "average_reaction_tyme": {
+    "average_reaction_time": {
       "type": "decimal"
     },
     "save_return_efficiency_percentage": {
       "type": "decimal"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }

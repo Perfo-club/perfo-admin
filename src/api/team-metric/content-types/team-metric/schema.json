@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "team_metrics",
+  "info": {
+    "singularName": "team-metric",
+    "pluralName": "team-metrics",
+    "displayName": "Metrica de equipo"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "attack_time": {
+      "type": "decimal"
+    },
+    "defense_time": {
+      "type": "decimal"
+    }
+  }
+}

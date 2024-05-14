@@ -17,8 +17,12 @@
       "pluginOptions": {}
     },
     "token": {
-      "type": "string",
-      "pluginOptions": {}
+      "type": "uid"
+    },
+    "enclosure": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::enclosure.enclosure"
     }
   }
 }
