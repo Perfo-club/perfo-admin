@@ -31,7 +31,7 @@ jobs:
       run: NODE_ENV=production npm run build
     - name: "Copy build"
       run: scp -r dist ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:${{secrets.WORK_DIR}}
-    - name: Connect and restart service
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "export NVM_DIR=~/.nvm && source ~/.nvm/nvm.sh && cd ${{ secrets.WORK_DIR }} && pm2 restart perfo-cms && exit"
+    - name: Connect, install and restart service
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "export NVM_DIR=~/.nvm && source ~/.nvm/nvm.sh && cd ${{ secrets.WORK_DIR }} && npm install && pm2 restart perfo-cms && exit"
     - name: cleanup
       run: rm -rf ~/.ssh
