@@ -75,6 +75,11 @@
       "relation": "manyToMany",
       "target": "api::team.team",
       "mappedBy": "users"
+    },
+    "establecimiento": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::enclosure.enclosure"
     }
   }
 }

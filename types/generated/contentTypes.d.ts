@@ -780,6 +780,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToMany',
       'api::team.team'
     >;
+    establecimiento: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::enclosure.enclosure'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
