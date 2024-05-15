@@ -811,7 +811,7 @@ export interface ApiCamCam extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     name: Attribute.String;
@@ -823,7 +823,6 @@ export interface ApiCamCam extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::cam.cam', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::cam.cam', 'oneToOne', 'admin::user'> &
@@ -840,7 +839,7 @@ export interface ApiEnclosureEnclosure extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     name: Attribute.String;
@@ -859,7 +858,6 @@ export interface ApiEnclosureEnclosure extends Schema.CollectionType {
     description: Attribute.Blocks;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::enclosure.enclosure',
       'oneToOne',
@@ -884,7 +882,7 @@ export interface ApiMatchMatch extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     date: Attribute.DateTime;
@@ -901,7 +899,6 @@ export interface ApiMatchMatch extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::match.match',
       'oneToOne',
@@ -925,14 +922,13 @@ export interface ApiMatchResultMatchResult extends Schema.CollectionType {
     displayName: 'Resultado de Partido';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     team_a_points: Attribute.Integer;
     team_b_points: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::match-result.match-result',
       'oneToOne',
@@ -957,7 +953,7 @@ export interface ApiPlayerMetricPlayerMetric extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     good_serves_percentage: Attribute.Decimal;
@@ -973,7 +969,6 @@ export interface ApiPlayerMetricPlayerMetric extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::player-metric.player-metric',
       'oneToOne',
@@ -998,7 +993,7 @@ export interface ApiTeamTeam extends Schema.CollectionType {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     name: Attribute.String;
@@ -1015,7 +1010,6 @@ export interface ApiTeamTeam extends Schema.CollectionType {
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::team.team', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::team.team', 'oneToOne', 'admin::user'> &
@@ -1031,14 +1025,13 @@ export interface ApiTeamMetricTeamMetric extends Schema.CollectionType {
     displayName: 'Metrica de equipo';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     attack_time: Attribute.Decimal;
     defense_time: Attribute.Decimal;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::team-metric.team-metric',
       'oneToOne',
