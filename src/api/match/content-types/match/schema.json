@@ -27,6 +27,15 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::team.team"
+    },
+    "match_token": {
+      "type": "uid",
+      "required": true
+    },
+    "enclosure": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::enclosure.enclosure"
     }
   }
 }

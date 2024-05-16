@@ -6,6 +6,7 @@
 
 import { factories } from '@strapi/strapi'
 import { Body } from '../types'
+import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs'
 
 export default factories.createCoreController('api::match.match', ({ strapi }) => ({
@@ -18,7 +19,6 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
         filters: { token: ctx.params.camToken },
         populate: '*'
       })
-
       if (!cam) {
         ctx.response.status = 400
         ctx.response.message = "Can't find cam."
@@ -133,7 +133,9 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
             data: {
               date: dayjs().format(),
               duration: matchDuration,
-              teams: [persistedTeamA.id, persistedTeamB.id]
+              teams: [persistedTeamA.id, persistedTeamB.id],
+              match_token: uuidv4(),
+              enclosure: cam.enclosure.id
             }
           })
 

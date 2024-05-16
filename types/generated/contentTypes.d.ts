@@ -897,6 +897,12 @@ export interface ApiMatchMatch extends Schema.CollectionType {
       'oneToMany',
       'api::team.team'
     >;
+    match_token: Attribute.UID & Attribute.Required;
+    enclosure: Attribute.Relation<
+      'api::match.match',
+      'oneToOne',
+      'api::enclosure.enclosure'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
