@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "metric_categories",
+  "info": {
+    "singularName": "metric-category",
+    "pluralName": "metric-categories",
+    "displayName": "Categoria de Metrica"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

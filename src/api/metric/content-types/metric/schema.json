@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "metrics",
+  "info": {
+    "singularName": "metric",
+    "pluralName": "metrics",
+    "displayName": "Metrica",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::metric-category.metric-category"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
+    }
+  }
+}

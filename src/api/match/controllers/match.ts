@@ -42,23 +42,6 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
 
           const { data: { teamA, teamB, matchDuration } } = ctx.request.body as Body
 
-          //create team metrics
-
-          const metricsTeamA = await strapi.entityService.create('api::team-metric.team-metric', {
-            data: {
-              attack_time: teamA.teamStats.attack_time,
-              defense_time: teamA.teamStats.defense_time
-            }
-          })
-
-          const metricsTeamB = await strapi.entityService.create('api::team-metric.team-metric', {
-            data: {
-              attack_time: teamB.teamStats.attack_time,
-              defense_time: teamB.teamStats.defense_time
-            }
-          })
-
-
           //create player and metrics
 
           const teamAPlayers = []
@@ -72,18 +55,6 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
             })
 
             teamAPlayers.push(user.id)
-
-            await strapi.service('api::player-metric.player-metric').create({
-              data: {
-                good_serves_percentage: playerMetric.good_serves_percentage,
-                ace_percentage: playerMetric.ace_percentage,
-                second_good_serves_percentage: playerMetric.second_good_serves_percentage,
-                net_points_percentage: playerMetric.net_points_percentage,
-                average_reaction_time: playerMetric.average_reaction_time,
-                save_return_efficiency_percentage: playerMetric.save_return_efficiency_percentage,
-                user: user.id,
-              }
-            })
           })
 
           teamB.playerStats.forEach(async (playerMetric) => {
@@ -95,17 +66,7 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
 
             teamBPlayers.push(user.id)
 
-            await strapi.service('api::player-metric.player-metric').create({
-              data: {
-                good_serves_percentage: playerMetric.good_serves_percentage,
-                ace_percentage: playerMetric.ace_percentage,
-                second_good_serves_percentage: playerMetric.second_good_serves_percentage,
-                net_points_percentage: playerMetric.net_points_percentage,
-                average_reaction_time: playerMetric.average_reaction_time,
-                save_return_efficiency_percentage: playerMetric.save_return_efficiency_percentage,
-                user: user.id,
-              }
-            })
+            
           })
 
           //create teams
@@ -113,8 +74,7 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
           const persistedTeamA = await strapi.service('api::team.team').create(
             {
               data: {
-                users: teamAPlayers,
-                metrics: metricsTeamA.id
+                users: teamAPlayers
               }
             })
 
@@ -122,8 +82,7 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
           const persistedTeamB = await strapi.service('api::team.team').create(
             {
               data: {
-                users: teamBPlayers,
-                metrics: metricsTeamB.id
+                users: teamBPlayers
               }
             })
 

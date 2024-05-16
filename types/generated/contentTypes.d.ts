@@ -770,11 +770,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    player_metrics: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToMany',
-      'api::player-metric.player-metric'
-    >;
     equipos: Attribute.Relation<
       'plugin::users-permissions.user',
       'manyToMany',
@@ -950,39 +945,65 @@ export interface ApiMatchResultMatchResult extends Schema.CollectionType {
   };
 }
 
-export interface ApiPlayerMetricPlayerMetric extends Schema.CollectionType {
-  collectionName: 'player_metrics';
+export interface ApiMetricMetric extends Schema.CollectionType {
+  collectionName: 'metrics';
   info: {
-    singularName: 'player-metric';
-    pluralName: 'player-metrics';
-    displayName: 'Metrica de Jugador';
+    singularName: 'metric';
+    pluralName: 'metrics';
+    displayName: 'Metrica';
     description: '';
   };
   options: {
     draftAndPublish: false;
   };
   attributes: {
-    good_serves_percentage: Attribute.Decimal;
-    ace_percentage: Attribute.Decimal;
-    second_good_serves_percentage: Attribute.Decimal;
-    net_points_percentage: Attribute.Decimal;
-    average_reaction_time: Attribute.Decimal;
-    save_return_efficiency_percentage: Attribute.Decimal;
-    user: Attribute.Relation<
-      'api::player-metric.player-metric',
+    name: Attribute.String;
+    description: Attribute.Text;
+    category: Attribute.Relation<
+      'api::metric.metric',
       'oneToOne',
-      'plugin::users-permissions.user'
+      'api::metric-category.metric-category'
     >;
+    slug: Attribute.UID<'api::metric.metric', 'name'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::player-metric.player-metric',
+      'api::metric.metric',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::player-metric.player-metric',
+      'api::metric.metric',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMetricCategoryMetricCategory extends Schema.CollectionType {
+  collectionName: 'metric_categories';
+  info: {
+    singularName: 'metric-category';
+    pluralName: 'metric-categories';
+    displayName: 'Categoria de Metrica';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::metric-category.metric-category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::metric-category.metric-category',
       'oneToOne',
       'admin::user'
     > &
@@ -1009,46 +1030,11 @@ export interface ApiTeamTeam extends Schema.CollectionType {
       'manyToMany',
       'plugin::users-permissions.user'
     >;
-    metrics: Attribute.Relation<
-      'api::team.team',
-      'oneToMany',
-      'api::team-metric.team-metric'
-    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::team.team', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::team.team', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiTeamMetricTeamMetric extends Schema.CollectionType {
-  collectionName: 'team_metrics';
-  info: {
-    singularName: 'team-metric';
-    pluralName: 'team-metrics';
-    displayName: 'Metrica de equipo';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    attack_time: Attribute.Decimal;
-    defense_time: Attribute.Decimal;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::team-metric.team-metric',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::team-metric.team-metric',
-      'oneToOne',
-      'admin::user'
-    > &
       Attribute.Private;
   };
 }
@@ -1075,9 +1061,9 @@ declare module '@strapi/types' {
       'api::enclosure.enclosure': ApiEnclosureEnclosure;
       'api::match.match': ApiMatchMatch;
       'api::match-result.match-result': ApiMatchResultMatchResult;
-      'api::player-metric.player-metric': ApiPlayerMetricPlayerMetric;
+      'api::metric.metric': ApiMetricMetric;
+      'api::metric-category.metric-category': ApiMetricCategoryMetricCategory;
       'api::team.team': ApiTeamTeam;
-      'api::team-metric.team-metric': ApiTeamMetricTeamMetric;
     }
   }
 }
