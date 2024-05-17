@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_metrics",
+  "info": {
+    "singularName": "user-metric",
+    "pluralName": "user-metrics",
+    "displayName": "Metricas De usuario",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "metric": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::metric.metric"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "match": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::match.match"
+    }
+  }
+}

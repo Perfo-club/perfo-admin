@@ -1039,6 +1039,51 @@ export interface ApiTeamTeam extends Schema.CollectionType {
   };
 }
 
+export interface ApiUserMetricUserMetric extends Schema.CollectionType {
+  collectionName: 'user_metrics';
+  info: {
+    singularName: 'user-metric';
+    pluralName: 'user-metrics';
+    displayName: 'Metricas De usuario';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    metric: Attribute.Relation<
+      'api::user-metric.user-metric',
+      'oneToOne',
+      'api::metric.metric'
+    >;
+    user: Attribute.Relation<
+      'api::user-metric.user-metric',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    amount: Attribute.Decimal;
+    match: Attribute.Relation<
+      'api::user-metric.user-metric',
+      'oneToOne',
+      'api::match.match'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::user-metric.user-metric',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::user-metric.user-metric',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1064,6 +1109,7 @@ declare module '@strapi/types' {
       'api::metric.metric': ApiMetricMetric;
       'api::metric-category.metric-category': ApiMetricCategoryMetricCategory;
       'api::team.team': ApiTeamTeam;
+      'api::user-metric.user-metric': ApiUserMetricUserMetric;
     }
   }
 }

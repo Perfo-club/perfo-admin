@@ -8,6 +8,10 @@ import { factories } from '@strapi/strapi'
 import { Body } from '../types'
 import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs'
+require('dayjs/locale/es-mx')
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+dayjs.extend(localizedFormat)
+dayjs.locale('es-mx')
 
 export default factories.createCoreController('api::match.match', ({ strapi }) => ({
   async createMatch(ctx: any) {
@@ -47,33 +51,31 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
           const teamAPlayers = []
           const teamBPlayers = []
 
-          teamA.playerStats.forEach(async (playerMetric) => {
+          for (const _ of teamA.playerMetrics){
             const user = await strapi.db.query('plugin::users-permissions.user').create({
               data: {
                 role: [role[0].id]
               }
             })
-
             teamAPlayers.push(user.id)
-          })
+          }
 
-          teamB.playerStats.forEach(async (playerMetric) => {
+          for (const _ of teamB.playerMetrics){
             const user = await strapi.db.query('plugin::users-permissions.user').create({
               data: {
                 role: [role[0].id]
               }
             })
-
             teamBPlayers.push(user.id)
+          }
 
-            
-          })
-
+        
           //create teams
 
           const persistedTeamA = await strapi.service('api::team.team').create(
             {
               data: {
+                name: `Equipo A de ${dayjs().format('LLL')}`,
                 users: teamAPlayers
               }
             })
@@ -82,13 +84,14 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
           const persistedTeamB = await strapi.service('api::team.team').create(
             {
               data: {
+                name: `Equipo B de ${dayjs().format('LLL')}`,
                 users: teamBPlayers
               }
             })
 
           //create Match
 
-          strapi.service('api::match.match').create({
+          const matchInstance = await strapi.service('api::match.match').create({
             data: {
               date: dayjs().format(),
               duration: matchDuration,
@@ -98,13 +101,66 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
             }
           })
 
+          //create player metrics
+
+          const metricPromises = [];
+
+          for (const playerId of teamAPlayers) {
+            for (const playerAMetric of teamA.playerMetrics) {
+              Object.keys(playerAMetric).forEach((key) => {
+                const metricPromise = (async () => {
+                  const playerMetricInstance = await strapi.entityService.findMany('api::metric.metric', {
+                    filters: {
+                      slug: key
+                    }
+                  })
+                  await strapi.entityService.create('api::user-metric.user-metric', {
+                    data: {
+                      metric: playerMetricInstance[0],
+                      match: matchInstance.id,
+                      user: playerId,
+                      amount: playerAMetric[key]
+
+                    }
+                  })
+                })();
+                metricPromises.push(metricPromise)
+              })
+            }
+          }
+
+          for (const playerId of teamBPlayers) {
+            for (const playerBMetric of teamA.playerMetrics) {
+              Object.keys(playerBMetric).forEach(async (key) => {
+                const metricPromise = (async () => {
+                  const playerMetricInstance = await strapi.entityService.findMany('api::metric.metric', {
+                    filters: {
+                      slug: key
+                    }
+                  })
+                  console.log(playerId)
+                  await strapi.entityService.create('api::user-metric.user-metric', {
+                    data: {
+                      metric: playerMetricInstance[0],
+                      match: matchInstance.id,
+                      user: playerId,
+                      amount: playerBMetric[key]
+
+                    }
+                  })
+                })();
+                metricPromises.push(metricPromise)
+              })
+            }
+          }
+          await Promise.all(metricPromises)
           await commit()
           ctx.status = 200
           ctx.message = "Match and metrics saved."
         }
         catch (e) {
           await rollback()
-          console.log(e)
+          console.log('Error!!', e)
           ctx.status = 400
           ctx.message = `An error ocurred all operations reverted. ${e.toString()}`
 

@@ -9,39 +9,36 @@ export interface Data {
 }
 
 export interface TeamA {
-  teamStats: TeamStats
-  playerStats: PlayerStat[]
-}
-
-export interface TeamStats {
-  attack_time: number
-  defense_time: number
-}
-
-export interface PlayerStat {
-  good_serves_percentage: string
-  ace_percentage: string
-  second_good_serves_percentage: string
-  net_points_percentage: string
-  average_reaction_time: string
-  save_return_efficiency_percentage: string
+  playerMetrics: PlayerMetrics[]
 }
 
 export interface TeamB {
-  teamStats: TeamStats2
-  playerStats: PlayerStat2[]
+  playerMetrics: PlayerMetrics[]
 }
 
-export interface TeamStats2 {
-  attack_time: number
-  defense_time: number
+
+export interface PlayerMetrics {
+  "tiempo-en-ataque": number
+  "tiempo-en-defensa": number
+  "tiempo-en-zona-media": number
+  "zona-de-devoluciones-de-golpe": number
+  "velocidad-de-golpe-en-defensa": number
+  "velocidad-de-golpe-en-ataque": number
+  "velocidad-de-saque": number
+  "1o-saque-valido": number
+  "2o-saque-valido": number
+  "distribucion-de-saque": number
+  "total-de-tiros": number
+  "porcentaje-de-tiros-ganadores": number
+  "numero-de-tiros-ganadores": number
+  "porcentaje-de-errores-no-forzados": number
+  "numero-de-errores-no-forzados": number
+  "relacion-errores-vs-tiros-ganadores": number
+  "eficiencia-en-la-red": number
+  globo: number
+  "golpe-de-fondo": number
+  volea: number
+  "bandeja-vibora": number
+  remate: number
 }
 
-export interface PlayerStat2 {
-  good_serves_percentage: string
-  ace_percentage: string
-  second_good_serves_percentage: string
-  net_points_percentage: string
-  average_reaction_time: string
-  save_return_efficiency_percentage: string
-}
