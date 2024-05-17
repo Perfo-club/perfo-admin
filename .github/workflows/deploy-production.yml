@@ -30,7 +30,7 @@ jobs:
     - name: "Build"
       run: NODE_ENV=production npm run build
     - name: "Delete previous build"
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "rm -R ${{secrets.workdir}}/dist"
+      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "rm -R ${{secrets.WORK_DIR}}/dist"
     - name: "Copy build"
       run: scp -r dist ${{secrets.SSH_USER}}@${{secrets.SSH_HOST}}:${{secrets.WORK_DIR}}
     - name: Connect, install and restart service
