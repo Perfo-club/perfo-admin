@@ -51,7 +51,7 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
           const teamAPlayers = []
           const teamBPlayers = []
 
-          for (const _ of teamA.playerMetrics){
+          for (const _ of teamA.playerMetrics) {
             const user = await strapi.db.query('plugin::users-permissions.user').create({
               data: {
                 role: [role[0].id]
@@ -60,7 +60,7 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
             teamAPlayers.push(user.id)
           }
 
-          for (const _ of teamB.playerMetrics){
+          for (const _ of teamB.playerMetrics) {
             const user = await strapi.db.query('plugin::users-permissions.user').create({
               data: {
                 role: [role[0].id]
@@ -69,7 +69,7 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
             teamBPlayers.push(user.id)
           }
 
-        
+
           //create teams
 
           const persistedTeamA = await strapi.service('api::team.team').create(
@@ -105,54 +105,49 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
 
           const metricPromises = [];
 
-          for (const playerId of teamAPlayers) {
-            for (const playerAMetric of teamA.playerMetrics) {
-              Object.keys(playerAMetric).forEach((key) => {
-                const metricPromise = (async () => {
-                  const playerMetricInstance = await strapi.entityService.findMany('api::metric.metric', {
-                    filters: {
-                      slug: key
-                    }
-                  })
-                  await strapi.entityService.create('api::user-metric.user-metric', {
-                    data: {
-                      metric: playerMetricInstance[0],
-                      match: matchInstance.id,
-                      user: playerId,
-                      amount: playerAMetric[key]
+          teamAPlayers.forEach((playerId, index) => {
+            Object.keys(teamA.playerMetrics[index]).forEach((key) => {
+              const metricPromise = (async () => {
+                const playerMetricInstance = await strapi.entityService.findMany('api::metric.metric', {
+                  filters: {
+                    slug: key
+                  }
+                })
+                await strapi.entityService.create('api::user-metric.user-metric', {
+                  data: {
+                    metric: playerMetricInstance[0],
+                    match: matchInstance.id,
+                    user: playerId,
+                    amount: teamA.playerMetrics[index][key]
+                  }
+                })
+              })();
+              metricPromises.push(metricPromise)
+            })
+          })
 
-                    }
-                  })
-                })();
-                metricPromises.push(metricPromise)
-              })
-            }
-          }
+          teamBPlayers.forEach((playerId, index) => {
+            Object.keys(teamB.playerMetrics[index]).forEach(async (key) => {
+              const metricPromise = (async () => {
+                const playerMetricInstance = await strapi.entityService.findMany('api::metric.metric', {
+                  filters: {
+                    slug: key
+                  }
+                })
+                console.log(playerId)
+                await strapi.entityService.create('api::user-metric.user-metric', {
+                  data: {
+                    metric: playerMetricInstance[0],
+                    match: matchInstance.id,
+                    user: playerId,
+                    amount: teamB.playerMetrics[index][key]
+                  }
+                })
+              })();
+              metricPromises.push(metricPromise)
+            })
+          })
 
-          for (const playerId of teamBPlayers) {
-            for (const playerBMetric of teamA.playerMetrics) {
-              Object.keys(playerBMetric).forEach(async (key) => {
-                const metricPromise = (async () => {
-                  const playerMetricInstance = await strapi.entityService.findMany('api::metric.metric', {
-                    filters: {
-                      slug: key
-                    }
-                  })
-                  console.log(playerId)
-                  await strapi.entityService.create('api::user-metric.user-metric', {
-                    data: {
-                      metric: playerMetricInstance[0],
-                      match: matchInstance.id,
-                      user: playerId,
-                      amount: playerBMetric[key]
-
-                    }
-                  })
-                })();
-                metricPromises.push(metricPromise)
-              })
-            }
-          }
           await Promise.all(metricPromises)
           await commit()
           ctx.status = 200
