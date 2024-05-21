@@ -14,7 +14,9 @@ export default () => {
       .digest('base64')
 
 
-    console.log('borrar=>HASH======>', hash) 
+    if(process.env.NODE_ENV !== 'production'){
+      console.log('HASH======>', hash) 
+    }
 
 
     if(hash === ctx.request.header['x-perfo-signature']){
