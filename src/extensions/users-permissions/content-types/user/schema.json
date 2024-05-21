@@ -15,9 +15,9 @@
     "username": {
       "type": "string",
       "minLength": 3,
-      "unique": true,
+      "unique": false,
       "configurable": false,
-      "required": true
+      "required": false
     },
     "email": {
       "type": "email",
@@ -34,7 +34,8 @@
       "minLength": 6,
       "configurable": false,
       "private": true,
-      "searchable": false
+      "searchable": false,
+      "required": true
     },
     "resetPasswordToken": {
       "type": "string",

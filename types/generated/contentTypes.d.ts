@@ -745,8 +745,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   attributes: {
     username: Attribute.String &
-      Attribute.Required &
-      Attribute.Unique &
       Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
@@ -757,6 +755,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       }>;
     provider: Attribute.String;
     password: Attribute.Password &
+      Attribute.Required &
       Attribute.Private &
       Attribute.SetMinMaxLength<{
         minLength: 6;
