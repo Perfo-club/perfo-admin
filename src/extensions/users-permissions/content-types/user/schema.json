@@ -75,6 +75,15 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::enclosure.enclosure"
+    },
+    "player_match_position": {
+      "type": "enumeration",
+      "enum": [
+        "player-1",
+        "player-2",
+        "player-3",
+        "player-4"
+      ]
     }
   }
 }

@@ -780,6 +780,9 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::enclosure.enclosure'
     >;
+    player_match_position: Attribute.Enumeration<
+      ['player-1', 'player-2', 'player-3', 'player-4']
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

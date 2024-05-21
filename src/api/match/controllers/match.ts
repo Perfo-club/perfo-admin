@@ -50,23 +50,28 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
 
           const teamAPlayers = []
           const teamBPlayers = []
+          let playerPosition = 1
 
           for (const _ of teamA.playerMetrics) {
             const user = await strapi.db.query('plugin::users-permissions.user').create({
               data: {
-                role: [role[0].id]
+                role: [role[0].id],
+                player_match_position: `player-${playerPosition}`
               }
             })
             teamAPlayers.push(user.id)
+            playerPosition++
           }
 
           for (const _ of teamB.playerMetrics) {
             const user = await strapi.db.query('plugin::users-permissions.user').create({
               data: {
-                role: [role[0].id]
+                role: [role[0].id],
+                player_match_position: `player-${playerPosition}`
               }
             })
             teamBPlayers.push(user.id)
+            playerPosition++
           }
 
 
