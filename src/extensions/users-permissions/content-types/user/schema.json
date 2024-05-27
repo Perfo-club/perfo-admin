@@ -66,13 +66,13 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "equipos": {
+    "teams": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::team.team",
-      "mappedBy": "users"
+      "inversedBy": "users"
     },
-    "establecimiento": {
+    "enclosures": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::enclosure.enclosure"

@@ -769,12 +769,12 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    equipos: Attribute.Relation<
+    teams: Attribute.Relation<
       'plugin::users-permissions.user',
       'manyToMany',
       'api::team.team'
     >;
-    establecimiento: Attribute.Relation<
+    enclosures: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToMany',
       'api::enclosure.enclosure'

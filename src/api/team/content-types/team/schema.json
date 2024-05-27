@@ -30,7 +30,7 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
-      "inversedBy": "equipos"
+      "mappedBy": "teams"
     }
   }
 }

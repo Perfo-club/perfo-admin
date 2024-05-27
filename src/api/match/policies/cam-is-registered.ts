@@ -8,6 +8,7 @@ export default async (policyContext, _, { strapi }: { strapi: Strapi }) => {
   const { camToken } = policyContext.params;
 
   if(!camToken){
+    console.warn('camToken not set.')
     return false
   }
 
@@ -18,6 +19,7 @@ export default async (policyContext, _, { strapi }: { strapi: Strapi }) => {
   })
 
   if (!cam) {
+    console.warn('no cam found')
     return false
   }
 
