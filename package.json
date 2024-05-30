@@ -11,10 +11,10 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "4.24.2",
-    "@strapi/plugin-i18n": "4.24.2",
-    "@strapi/plugin-users-permissions": "4.24.2",
-    "@strapi/strapi": "4.24.2",
+    "@strapi/plugin-cloud": "4.24.4",
+    "@strapi/plugin-i18n": "4.24.4",
+    "@strapi/plugin-users-permissions": "4.24.4",
+    "@strapi/strapi": "4.24.4",
     "@types/koa": "^2.15.0",
     "dayjs": "^1.11.11",
     "pg": "8.8.0",
@@ -26,7 +26,7 @@
     "uuid": "^9.0.1"
   },
   "author": {
-    "name": "A Strapi developer"
+    "name": "Fliri"
   },
   "strapi": {
     "uuid": "17ffdb65-8241-499c-86d2-243c87505cb8"
