@@ -841,7 +841,7 @@ export interface ApiEnclosureEnclosure extends Schema.CollectionType {
   attributes: {
     name: Attribute.String;
     address: Attribute.String;
-    logo: Attribute.Media;
+    logo: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     cams: Attribute.Relation<
       'api::enclosure.enclosure',
       'oneToMany',
@@ -853,6 +853,11 @@ export interface ApiEnclosureEnclosure extends Schema.CollectionType {
       'api::match.match'
     >;
     description: Attribute.Blocks;
+    owner: Attribute.Relation<
+      'api::enclosure.enclosure',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1026,7 +1031,7 @@ export interface ApiTeamTeam extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String;
-    avatar: Attribute.Media;
+    avatar: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     users: Attribute.Relation<
       'api::team.team',
       'manyToMany',

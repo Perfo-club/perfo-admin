@@ -106,6 +106,16 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
             }
           })
 
+          //Update enclosure match
+
+          const enclosureIns = await strapi.entityService.findOne('api::enclosure.enclosure', cam.enclosure.id, {populate: 'matches'})
+
+          await strapi.entityService.update('api::enclosure.enclosure', enclosureIns.id, {
+            data:{
+              matches:[...enclosureIns.matches, matchInstance.id]
+            }
+          })
+
           //create player metrics
 
           const metricPromises = [];
