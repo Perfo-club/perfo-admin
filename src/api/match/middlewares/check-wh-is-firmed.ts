@@ -5,7 +5,6 @@
 const crypto = require('crypto');
 
 export default () => {
-  // Add your own logic here.
   return async (ctx, next) => {
     const payload = JSON.stringify(ctx.request.body)
     const hash = crypto
