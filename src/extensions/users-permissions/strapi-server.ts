@@ -14,9 +14,9 @@ export default function (plugin) {
       return false
     }
     if (user.role.name === 'Owner') {
-      console.error("Login error: Player attempt to login in Owner account")
       return true
     }
+    console.error("Login error: Player attempt to login in Owner account")
     return false
   };
 
@@ -34,9 +34,9 @@ export default function (plugin) {
       return false
     }
     if (user.role.name === 'Player') {
-      console.error("Login error: Owner attempt to login in Player account")
       return true
     }
+    console.error("Login error: Owner attempt to login in Player account")
     return false
   };
 
