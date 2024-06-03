@@ -114,7 +114,8 @@ export default function (plugin) {
     //create enclosure 
     await strapi.entityService.create('api::enclosure.enclosure', {
       data: {
-        name: ctx.request.body.enclosure_name
+        name: ctx.request.body.enclosure_name,
+        owner: user[0]
       }
     })
   }

@@ -32,5 +32,6 @@ export default factories.createCoreController('api::enclosure.enclosure', ({ str
     })
 
     return usersCount
-  }
-}));
+  },
+})
+)
