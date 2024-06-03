@@ -90,6 +90,10 @@
       "type": "string",
       "unique": true,
       "minLength": 4
+    },
+    "onboarded": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
