@@ -1,5 +1,10 @@
 export default function (plugin) {
 
+
+  //Routes for login for owners and players
+
+
+  //Owner:
   plugin.policies['check-is-owner'] = async (ctx) => {
     const { identifier } = ctx.request.body
 
@@ -20,6 +25,17 @@ export default function (plugin) {
     return false
   };
 
+  plugin.routes['content-api'].routes.push({
+    method: 'POST',
+    path: '/auth/local/owner',
+    handler: 'auth.callback',
+    config: {
+      auth: false,
+      policies: ['check-is-owner']
+    }
+  })
+
+  //Player:
   plugin.policies['check-is-player'] = async (ctx) => {
     const { identifier } = ctx.request.body
 
@@ -39,24 +55,84 @@ export default function (plugin) {
     console.error("Login error: Owner attempt to login in Player account")
     return false
   };
-
-  plugin.routes['content-api'].routes.push({
-    method: 'POST',
-    path: '/auth/local/owner',
-    handler: 'auth.callback',
-    config: {
-      auth: false,
-      policies: ['check-is-owner']
-    }
-  })
-
-  const regularLoginRoute = plugin.routes['content-api'].routes.find(r=>{
+  const regularLoginRoute = plugin.routes['content-api'].routes.find(r => {
     return r.path === '/auth/local'
   })
-  if(!regularLoginRoute){
+  if (!regularLoginRoute) {
     throw new Error("No regular login route found");
   }
   regularLoginRoute.config.policies = ['check-is-player']
+
+  //-----
+
+
+  //Routes for sign up for owners and players (default is Player)
+
+  const defaultRegisterFn = plugin.controllers.auth.register
+
+  //Owner: 
+
+  plugin.controllers.auth['owner-register'] = async (ctx) => {
+    //default register as Owner role (on settings)
+
+    if (!ctx.request.body.enclosure_name) {
+      return ctx.badRequest('Missing enclosure name.')
+    }
+    if (!ctx.request.body.phone) {
+      return ctx.badRequest("Missing phone.")
+    }
+
+    if (ctx.request.body.phone.length < 6) {
+      return ctx.badRequest("Phone too short.")
+    }
+
+    await defaultRegisterFn(ctx)
+
+    //change user role
+
+    const role = await strapi.entityService.findMany('plugin::users-permissions.role', {
+      filters: {
+        name: 'Owner'
+      }
+    })
+
+    if (!role[0]) {
+      return ctx.badRequest("Can't find Owner role.")
+    }
+
+    const user = await strapi.entityService.findMany('plugin::users-permissions.user', {
+      filters: {
+        email: ctx.request.body.email
+      }
+    })
+    await strapi.entityService.update('plugin::users-permissions.user', user[0].id, {
+      data: {
+        role: role[0]
+      }
+    })
+
+    //create enclosure 
+    await strapi.entityService.create('api::enclosure.enclosure', {
+      data: {
+        name: ctx.request.body.enclosure_name
+      }
+    })
+  }
+
+  plugin.routes['content-api'].routes.push({
+    method: 'POST',
+    path: '/auth/local/register/owner',
+    handler: 'auth.owner-register',
+    config: {
+      auth: false,
+    }
+  })
+
+
+
+  //Player: default
+
+
 
   return plugin
 

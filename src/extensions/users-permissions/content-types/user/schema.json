@@ -85,6 +85,11 @@
         "player-3",
         "player-4"
       ]
+    },
+    "phone": {
+      "type": "string",
+      "unique": true,
+      "minLength": 4
     }
   }
 }
