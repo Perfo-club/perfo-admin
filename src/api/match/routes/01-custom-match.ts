@@ -1,5 +1,13 @@
+
 export default {
   routes: [
+    {method: 'GET',
+      path: '/matches/:groupBy',
+      handler:'api::match.match.getMatchesGroupedBy',
+      config:{
+        middlewares:['api::match.get-owned-matches']
+      }
+    },
     {
       method: 'POST',
       path: '/match/assign/:matchToken/:playerMatchPosition',

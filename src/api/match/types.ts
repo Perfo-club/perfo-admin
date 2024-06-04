@@ -42,3 +42,12 @@ export interface PlayerMetrics {
   remate: number
 }
 
+export const GroupByOptions = [
+  'month',
+  'year',
+]
+
+export const FormatBasedOnGroupBy = {
+  month: 'MMMM',
+  year: 'YYYY'
+}
