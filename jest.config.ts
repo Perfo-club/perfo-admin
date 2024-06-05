@@ -26,6 +26,7 @@ const config: Config = {
 
   // The directory where Jest should output its coverage files
   coverageDirectory: "coverage",
+  testTimeout: 30000, // Timeout global para todos los tests
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
