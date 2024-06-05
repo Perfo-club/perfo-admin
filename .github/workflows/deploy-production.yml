@@ -8,6 +8,20 @@ jobs:
   update-repository-pull:
     name: Build and deploy
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     
     steps:
     - name: Checkout repo
@@ -27,6 +41,16 @@ jobs:
         ssh-keyscan -H ${{ secrets.SSH_HOST }} > ~/.ssh/known_hosts
     - name: Set up environment
       run: echo "export PATH=$PATH" >> $GITHUB_ENV
+    - name: Create .env file
+      run: echo "${{ secrets.TEST_ENV }}" > .env
+    - name: Wait for PostgreSQL to be ready
+      run: |
+        until pg_isready -h localhost -p 5432; do
+          echo "Waiting for PostgreSQL to be ready..."
+          sleep 5
+        done
+    - name: Run tests
+      run: npm run test
     - name: "Build"
       run: NODE_ENV=production npm run build
     - name: "Delete previous build"
