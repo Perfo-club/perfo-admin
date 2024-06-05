@@ -24,7 +24,7 @@ jobs:
 
     steps:
     - name: Setup database
-      run: psql -h postgres -U postgres_user -c 'CREATE DATABASE "test";'
+      run: psql -h 127.0.0.1 -U postgres -c 'CREATE DATABASE "test";'
       env:
         PGPASSWORD: postgres
     - name: Checkout repo
