@@ -22,4 +22,4 @@ async function cleanupStrapi() {
   await strapi.db?.connection?.destroy();
 }
 
-module.exports = { setupStrapi, cleanupStrapi };
+module.exports = { setupStrapi, cleanupStrapi, instance };
