@@ -22,8 +22,13 @@ jobs:
         ports:
           - 5432:5432
 
-    
     steps:
+    - name: Install PostgreSQL client
+      run: apt-get update && apt-get install --yes postgresql-client
+    - name: Setup database
+      run: psql -h postgres -U postgres_user -c 'CREATE DATABASE "test";'
+      env:
+        PGPASSWORD: postgres
     - name: Checkout repo
       uses: actions/checkout@v4
     - name: Setup Node
