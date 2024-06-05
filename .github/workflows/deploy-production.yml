@@ -23,10 +23,6 @@ jobs:
           - 5432:5432
 
     steps:
-    - name: Setup database
-      run: psql -h 127.0.0.1 -U postgres -c 'CREATE DATABASE "test";'
-      env:
-        PGPASSWORD: postgres
     - name: Checkout repo
       uses: actions/checkout@v4
     - name: Setup Node
@@ -52,6 +48,10 @@ jobs:
           echo "Waiting for PostgreSQL to be ready..."
           sleep 5
         done
+    - name: Setup database
+      run: psql -h 127.0.0.1 -U postgres -c 'CREATE DATABASE "test";'
+      env:
+        PGPASSWORD: postgres
     - name: Run tests
       run: npm run test
     - name: "Build"
