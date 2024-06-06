@@ -1,4 +1,3 @@
-import resetUsers from "./ResetUsers";
 import { createBaseRoles } from "./roles";
 
 const Strapi = require("@strapi/strapi");
@@ -15,7 +14,6 @@ async function setupStrapi() {
     await instance.server.mount();
   }
   await createBaseRoles(instance)
-  await resetUsers(instance)
   return instance;
 }
 

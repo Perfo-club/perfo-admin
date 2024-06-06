@@ -9,7 +9,8 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "test": "jest --forceExit --detectOpenHandles"
+    "test": "jest --forceExit --detectOpenHandles",
+    "test:local": "node ./scripts/bootstrap.js && jest --forceExit --detectOpenHandles"
   },
   "dependencies": {
     "@strapi/plugin-cloud": "4.24.4",
@@ -47,6 +48,7 @@
     "@babel/preset-typescript": "^7.24.7",
     "@jest/globals": "^29.7.0",
     "babel-jest": "^29.7.0",
+    "knex": "^3.1.0",
     "ts-jest": "^29.1.4"
   }
 }
