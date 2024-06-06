@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { setupStrapi, cleanupStrapi } = require("./helpers/strapi");
+require('./cam')
 
 beforeAll(async () => {
   jest.setTimeout(15000)

@@ -1,3 +1,6 @@
+import resetUsers from "./ResetUsers";
+import { createBaseRoles } from "./roles";
+
 const Strapi = require("@strapi/strapi");
 const fs = require("fs");
 
@@ -11,10 +14,13 @@ async function setupStrapi() {
     
     await instance.server.mount();
   }
+  await createBaseRoles(instance)
+  await resetUsers(instance)
   return instance;
 }
 
 async function cleanupStrapi() {
+  // const dbSettings = strapi.config.get("database.connection");
   //close server to release the db-file
   await strapi.server.httpServer.close();
 

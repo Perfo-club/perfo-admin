@@ -49,7 +49,7 @@ jobs:
           sleep 5
         done
     - name: Setup database
-      run: psql -h 127.0.0.1 -U postgres -c 'CREATE DATABASE "test";'
+      run: psql -h 127.0.0.1 -U postgres -c 'CREATE DATABASE "perfo_test";'
       env:
         PGPASSWORD: postgres
     - name: Run tests
