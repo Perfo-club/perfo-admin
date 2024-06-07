@@ -1,11 +1,10 @@
 import { createBaseRoles } from "./roles";
 
 const Strapi = require("@strapi/strapi");
-const fs = require("fs");
 
-let instance;
+export let instance;
 
-async function setupStrapi() {
+export async function setupStrapi() {
   if (!instance) {
     const appContext = await Strapi.compile()
     const strapi = await Strapi(appContext).load()
@@ -17,7 +16,7 @@ async function setupStrapi() {
   return instance;
 }
 
-async function cleanupStrapi() {
+export async function cleanupStrapi() {
   // const dbSettings = strapi.config.get("database.connection");
   //close server to release the db-file
   await strapi.server.httpServer.close();
@@ -25,5 +24,3 @@ async function cleanupStrapi() {
   // close the connection to the database before deletion
   await strapi.db?.connection?.destroy();
 }
-
-module.exports = { setupStrapi, cleanupStrapi, instance };

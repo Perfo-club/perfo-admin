@@ -741,6 +741,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
         minLength: 4;
       }>;
     onboarded: Attribute.Boolean & Attribute.DefaultTo<false>;
+    metrics: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::user-metric.user-metric'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

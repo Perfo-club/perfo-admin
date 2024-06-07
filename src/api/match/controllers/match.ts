@@ -120,7 +120,7 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
 
           const metricPromises = [];
 
-          teamAPlayers.forEach((playerId, index) => {
+          teamAPlayers.forEach(async (playerId, index) => {
             Object.keys(teamA.playerMetrics[index]).forEach((key) => {
               const metricPromise = (async () => {
                 const playerMetricInstance = await strapi.entityService.findMany('api::metric.metric', {
@@ -128,14 +128,22 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
                     slug: key
                   }
                 })
-                await strapi.entityService.create('api::user-metric.user-metric', {
+               const metricIns = await strapi.entityService.create('api::user-metric.user-metric', {
                   data: {
                     metric: playerMetricInstance[0],
                     match: matchInstance.id,
                     user: playerId,
                     amount: teamA.playerMetrics[index][key]
-                  }
+                  },
                 })
+                await strapi.entityService.update('plugin::users-permissions.user', playerId, {
+                  data: {
+                    metrics: {
+                      connect: [metricIns.id],
+                    },
+                  },
+                });
+
               })();
               metricPromises.push(metricPromise)
             })
@@ -149,7 +157,7 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
                     slug: key
                   }
                 })
-                await strapi.entityService.create('api::user-metric.user-metric', {
+                const metricIns = await strapi.entityService.create('api::user-metric.user-metric', {
                   data: {
                     metric: playerMetricInstance[0],
                     match: matchInstance.id,
@@ -157,6 +165,13 @@ export default factories.createCoreController('api::match.match', ({ strapi }) =
                     amount: teamB.playerMetrics[index][key]
                   }
                 })
+                await strapi.entityService.update('plugin::users-permissions.user', playerId, {
+                  data: {
+                    metrics: {
+                      connect: [metricIns.id],
+                    },
+                  },
+                });
               })();
               metricPromises.push(metricPromise)
             })

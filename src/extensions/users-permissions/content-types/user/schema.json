@@ -94,6 +94,11 @@
     "onboarded": {
       "type": "boolean",
       "default": false
+    },
+    "metrics": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-metric.user-metric"
     }
   }
 }
