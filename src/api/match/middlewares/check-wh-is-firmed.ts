@@ -13,7 +13,7 @@ export default () => {
       .digest('base64')
 
 
-    if(process.env.NODE_ENV !== 'production'){
+    if(process.env.NODE_ENV === 'development'){
       console.log('HASH======>', hash) 
     }
 

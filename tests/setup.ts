@@ -68,4 +68,5 @@ afterEach(async () => {
 afterAll(async () => {
   await cleanupStrapi();
   createSpy.mockRestore();
+  originalDbQueryUserSpy.mockRestore();
 });

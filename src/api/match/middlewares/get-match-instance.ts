@@ -6,11 +6,7 @@ export default () => {
       },
       populate: {
         teams:{
-          populate:{
-            users:{
-              fields: ['id','player_match_position'],
-            }
-          }
+          populate: 'users'
         }
       }
     })
@@ -27,6 +23,7 @@ export default () => {
     }
     if(match){
       ctx.state.match = match
+      ctx.state.teams = match.teams
       return next()
     }else{
       ctx.status = 400
