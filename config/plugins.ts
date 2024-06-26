@@ -12,7 +12,7 @@ export default () => ({
       contentTypes: [
         {
           uid: 'api::cam.cam',
-          targetField: 'token ',
+          targetField: 'token',
           frontend: {
             basePath: '/record',
           },
