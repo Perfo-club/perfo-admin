@@ -13,10 +13,10 @@
     "test:local": "node ./scripts/bootstrap.js && jest --forceExit --detectOpenHandles"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "4.24.4",
-    "@strapi/plugin-i18n": "4.24.4",
-    "@strapi/plugin-users-permissions": "4.24.4",
-    "@strapi/strapi": "4.24.4",
+    "@strapi/plugin-cloud": "4.25.1",
+    "@strapi/plugin-i18n": "4.25.1",
+    "@strapi/plugin-users-permissions": "4.25.1",
+    "@strapi/strapi": "4.25.1",
     "@types/jest": "^29.5.12",
     "@types/koa": "^2.15.0",
     "dayjs": "^1.11.11",
@@ -26,6 +26,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "5.3.4",
     "slugify": "^1.6.6",
+    "strapi-plugin-qrcode-generator": "^0.1.1",
     "styled-components": "5.3.3",
     "supertest": "^7.0.0",
     "ts-node": "^10.9.2",
